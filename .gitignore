@@ -1,8 +1,5 @@
 /backend/node_modules
 /frontend/node_modules
-/.next
-/.turbo
-/.vercel
 /coverage
 .DS_Store
 .env
@@ -13,16 +10,8 @@
 .vscode
 .idea
 npm-debug.log*
-/frontend/.env
-/frontend/.env.local
-/frontend/.env.development.local
-/frontend/.env.test.local
-/frontend/.env.production.local
-/backend/.env.local
-/backend/.env.development.local
-/backend/.env.test.local
-/backend/.env.production.local
-/backend/.env
+/frontend/.env*
+/backend/.env*
 /frontend/.next
 /frontend/.turbo
 /frontend/.vercel
