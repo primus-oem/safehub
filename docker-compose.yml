@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:15
+    container_name: safehub-db
+    environment:
+      POSTGRES_USER: safehub
+      POSTGRES_PASSWORD: safehub
+      POSTGRES_DB: safehub
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: safehub-backend
+    command: npm run start:dev
+    volumes:
+      - ./backend:/usr/src/app
+    environment:
+      DATABASE_URL: postgres://safehub:safehub@db:5432/safehub
+      PERMGUARD_URL: http://permguard:8181
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+      - permguard
+
+  frontend:
+    build: ./frontend
+    container_name: safehub-frontend
+    command: npm run dev
+    volumes:
+      - ./frontend:/usr/src/app
+    environment:
+      NEXTAUTH_URL: http://localhost:3000
+      BACKEND_URL: http://backend:4000/graphql
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  permguard:
+    image: openpolicyagent/opa:latest
+    container_name: safehub-permguard
+    command: ["run", "--server", "/policies"]
+    volumes:
+      - ./permguard:/policies
+    ports:
+      - "8181:8181"
+
+volumes:
+  db_data:

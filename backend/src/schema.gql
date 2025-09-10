@@ -1,0 +1,46 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  email: String!
+  name: String
+  role: String
+  company: Company
+}
+
+type Document {
+  id: Int!
+  title: String!
+  content: String
+  company: Company
+}
+
+type Company {
+  id: Int!
+  name: String!
+  users: [User!]
+  documents: [Document!]
+}
+
+type Query {
+  documents: [Document!]!
+  companies: [Company!]!
+  company(id: Int!): Company
+  users: [User!]!
+  user(id: Int!): User
+}
+
+type Mutation {
+  createDocument(title: String!, content: String, companyId: Int): Document!
+  updateDocument(id: Int!, title: String!, content: String): Document!
+  deleteDocument(id: Int!): Document!
+  createCompany(name: String!): Company!
+  updateCompany(id: Int!, name: String!): Company!
+  deleteCompany(id: Int!): Company!
+  assignUserToCompany(userId: Int!, companyId: Int!, role: String): User!
+  createUser(email: String!, name: String, role: String, companyId: Int): User!
+  updateUser(id: Int!, email: String, name: String, role: String, companyId: Int): User!
+  deleteUser(id: Int!): User!
+}
